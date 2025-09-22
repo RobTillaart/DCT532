@@ -18,21 +18,21 @@ Arduino library for the DCT532, an I2C industrial pressure and temperature senso
 
 **Experimental**
 
-This library is to use the I2C DCT532 industrial pressure and temperature sensor. It does not support the RS485 / MODbus version. 
+This library is to use the I2C DCT532 industrial pressure and temperature sensor. 
+The library does not support the RS485 / MODbus version.
 
-Nominal pressure from 0 ... 100 mbar up to 0 ... 60 bar
+The DCT532 is a range of industrial pressure sensors made by BD SENSORS GmbH, 
+www.bdsensors.de. The pressure ranges vary from 0..100 mbar up to 0..60 bar.
+These sensors have an accuracy (IEC 61298-2) ≤ ± 0.25 % FSO (Full Scale Output).
 
-Accuracy according to IEC 61298-2: ≤ ± 0.25 % FSO (Full Scale Output)
+This library only support the I2C interface, there exists also an RS485 version 
+of the sensor which has more functionality (TODO verify).
 
-TODO absolute vs gauge
+The library is not tested with hardware yet.
 
-This library only support the I2C interface.
+TODO: extend info here.
 
-This library is not tested with hardware yet.
-
-
-TODO extend into
-
+For details read the datasheet (www.bdsensors.de).
 
 Feedback as always is welcome.
 
@@ -41,17 +41,19 @@ Feedback as always is welcome.
 
 Pressure range from 100 mbar .. 60 bar.
 
-|  type  |  bar   |  type  |  bar   |  type  |  bar   |
-|:------:|:------:|:------:|:------:|:------:|:------:|
-|  1000  |  0.10  |  1001  |  1.00  |  1002  |  10.0  |
-|  1600  |  0.16  |  1601  |  1.60  |  1602  |  16.0  |
-|  2500  |  0.25  |  2501  |  2.50  |  2502  |  25.0  |
-|  4000  |  0.40  |  4001  |  4.00  |  4002  |  40.0  |
-|  6000  |  0.60  |  6001  |  6.00  |  6002  |  60.0  |
+|  type  |  bar   |  peak  |  type  |  bar   |  peak  |  type  |  bar   |  peak  |
+|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
+|  1000  |  0.10  |        |  1001  |  1.00  |        |  1002  |  10.0  |        |
+|  1600  |  0.16  |        |  1601  |  1.60  |        |  1602  |  16.0  |        |
+|  2500  |  0.25  |        |  2501  |  2.50  |        |  2502  |  25.0  |        |
+|  4000  |  0.40  |        |  4001  |  4.00  |        |  4002  |  40.0  |        |
+|  6000  |  0.60  |        |  6001  |  6.00  |        |  6002  |  60.0  |        |
 
 Note: absolute pressure possible from 0.4 bar
 
 Note: type x102 = -1..0 bar, type 9999 = custom.
+
+TODO add peak to table.
 
 
 ### Related
@@ -102,7 +104,7 @@ Only test **readSensor()** as that is the main function.
 |   600 KHz  |             |
 
 
-TODO: write and run performance sketch on hardware.
+TODO: run performance sketch on hardware.
 
 
 ## Interface
@@ -114,8 +116,8 @@ TODO: write and run performance sketch on hardware.
 ### Constructor
 
 - **DCT532(uint8_t address, TwoWire \*wire = &Wire)** optional select I2C bus.
-- **bool begin(float maxPressure = 10, float minPressure = 0)** sets the range of the sensor,
-default is 10 bar. resets the internal variables.
+- **bool begin(float maxPressure, float minPressure = 0)** sets the range of the sensor,
+the maximum pressure needs to be set explicit. Furthermore it resets the internal variables.
 Returns true if device address is visible on the I2C bus.
 - **bool isConnected()** returns true if device address is visible on the I2C bus.
 - **uint8_t getAddress()** Returns the address set in the constructor (convenience).
@@ -128,13 +130,16 @@ returns DCT532_OK (0) or an error code.
 - **float getPressure()** returns the last pressure in BAR.
 - **float getTemperature()** returns the last temperature in degrees Celsius.
 - **uint32_t lastRead()** timestamp in millis of last read.
+Can be used for schedule timed measurements.
 
 
 ### Debug
 
-- **int getLastError()** returns last error of low level communication.
+- **int getLastError()** returns last error of the low level communication.
 
 TODO: insert table
+
+DCT532_OK = 0
 
 
 ## Future
@@ -147,7 +152,7 @@ TODO: insert table
 #### Should
 
 - improve error handling
-- other registers?
+- other registers accesible over I2C?
 - do performance test
 - remove P and T as private variables when library works.
 - write examples
@@ -159,8 +164,8 @@ TODO: insert table
 - derived classes for specific P sensors?
 - do we need minimum pressure?
 - do we need offsets to calibrate?
-- float getPmin(), float getPmax()  debugging?  
-- setType() function ?
+- float getPmin(), float getPmax() for debugging?  
+- setType() getType() function ?
 
 #### Wont
 

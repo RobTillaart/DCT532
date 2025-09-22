@@ -17,6 +17,7 @@
 
 #define DCT532_LIB_VERSION         (F("0.1.0"))
 
+
 //  ERROR CODES
 //  values <> 0 are errors.
 #define DCT532_OK                   0
