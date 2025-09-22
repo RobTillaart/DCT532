@@ -41,13 +41,23 @@ unittest_teardown()
 
 unittest(test_constants)
 {
-  assertEqual(1, 1);
+  assertEqual( 0, DCT532_OK);
+  assertEqual(-1, DCT532_REQUEST_ERROR);
 }
 
 
 unittest(test_constructor)
 {
-  DCT532 dct(0x50);
+  DCT532 dct(0x28);
+
+  //  defaults before begin()
+  assertEqual(0x28, dct.getAddress());
+  assertEqual(   0, dct.lastRead());
+  assertEqual(   0, dct.getPressure());
+  assertEqual(   0, dct.getTemperature());
+  assertEqual(   0, dct.getLastError());
+
+  //  TODO
 }
 
 

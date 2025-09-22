@@ -2,13 +2,13 @@
 //
 //    FILE: DCT532.h
 //  AUTHOR: Rob Tillaart
-//    DATE: 2025-09-22
+//    DATE: 2025-06-03
 // VERSION: 0.1.0
 // PURPOSE: Arduino library for
 //     URL: https://github.com/RobTillaart/DCT532
 //          https://forum.arduino.cc/t/i2c-industrial-pressure-sensor-dct-532-with-arduino-uno-advice-required/1385075/11
 //
-//  need HW to develop /test
+//  TODO: need HW to develop /test
 
 
 #include "Arduino.h"
@@ -29,13 +29,12 @@ class DCT532
 public:
   DCT532(uint8_t address, TwoWire *wire = &Wire);
 
-  bool     begin(float maxPressure = 10, float minPressure = 0);
+  bool     begin(float maxPressure, float minPressure = 0);
   bool     isConnected();
   uint8_t  getAddress();
 
-
   //       READ
-  int     readSensor();
+  int      readSensor();      //  returns status
   float    getPressure();     //  Bar
   float    getTemperature();  //  Celsius
   uint32_t lastRead();
@@ -50,7 +49,7 @@ private:
   uint32_t _lastRead;
   float    _pressure;
   float    _temperature;
-  //  RAW data for develop, 
+  //  RAW data for develop,
   //  TODO remove after confirmed working/
   uint16_t P;
   uint16_t T;

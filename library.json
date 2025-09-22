@@ -1,7 +1,7 @@
 {
   "name": "DCT532",
-  "keywords": "CO2,environment",
-  "description": "Arduino library for DCT532 I2C pressure and temperature sensor.",
+  "keywords": "environment",
+  "description": "Arduino library for the DCT532, an I2C industrial pressure and temperature sensor.",
   "authors":
   [
     {
