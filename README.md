@@ -18,8 +18,8 @@ Arduino library for the DCT532, an I2C industrial pressure and temperature senso
 
 **Experimental**
 
-This library is to use the I2C DCT532 industrial pressure and temperature sensor. 
-The library does not support the RS485 / MODbus version.
+This DCT532 library is to use the I2C DCT532 industrial pressure and temperature sensor. 
+It does not support the RS485 / MODbus version of the sensor.
 
 The DCT532 is a range of industrial pressure sensors made by BD SENSORS GmbH, 
 www.bdsensors.de. The pressure ranges vary from 0..100 mbar up to 0..60 bar.
@@ -148,13 +148,15 @@ DCT532_OK = 0
 
 - improve documentation
 - get hardware to test proper working of the library 
+- verify fixed address
 
 #### Should
 
 - improve error handling
-- other registers accesible over I2C?
-- do performance test
-- remove P and T as private variables when library works.
+- other registers accessible over I2C?
+- measure performance
+- remove P and T as private variables when library works?
+  - raw values can be interesting for efficient storage.
 - write examples
 
 
@@ -162,12 +164,11 @@ DCT532_OK = 0
 
 - create unit tests if possible
 - derived classes for specific P sensors?
-- do we need minimum pressure?
 - do we need offsets to calibrate?
-- float getPmin(), float getPmax() for debugging?  
-- setType() getType() function ?
 
 #### Wont
+
+- setType() getType() function ?
 
 
 ## Support
